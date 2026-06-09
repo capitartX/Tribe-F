@@ -9,11 +9,27 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { overflow: hidden; }
+      #start-button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        padding: 16px 32px;
+        font-size: 18px;
+        background: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+      }
     </style>
   </head>
   <body>
+    <button id="start-button">Tap to Start AR</button>
+
     <a-scene
-      mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: yes; uiError: yes; uiScanning: yes;"
+      mindar-image="imageTargetSrc: ./targets.mind; autoStart: false; uiLoading: yes; uiError: yes; uiScanning: yes;"
       color-space="sRGB"
       renderer="colorManagement: true; physicallyCorrectLights: true"
       vr-mode-ui="enabled: false"
@@ -38,9 +54,21 @@
           src="#scorpion-video"
           position="0 0 0"
           width="1"
-          height="0.5625"
+          height="1"
         ></a-video>
       </a-entity>
     </a-scene>
+
+    <script>
+      const btn = document.getElementById('start-button');
+      const video = document.getElementById('scorpion-video');
+      const scene = document.querySelector('a-scene');
+
+      btn.addEventListener('click', () => {
+        btn.style.display = 'none';
+        video.play();
+        scene.systems['mindar-image-system'].start();
+      });
+    </script>
   </body>
 </html>
