@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR Experience</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { overflow: hidden; }
+      #start-button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        padding: 16px 32px;
+        font-size: 18px;
+        background: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="start-button">Tap to Start AR</button>
+
+    <a-scene
+      mindar-image="imageTargetSrc: ./targets.mind; autoStart: false; uiLoading: yes; uiError: yes; uiScanning: yes;"
+      color-space="sRGB"
+      renderer="colorManagement: true; physicallyCorrectLights: true"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets>
+        <!-- 0: Scorpion 1024x1024 -->
+        <video id="v0" src="./Scorpion.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 1: Crab 1024x576 (16:9) -->
+        <video id="v1" src="./Crab.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 2: Dog 1024x1024 -->
+        <video id="v2" src="./Dog.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 3: Duck 1182x1182 -->
+        <video id="v3" src="./Duck.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 4: Elephant 1344x1280 -->
+        <video id="v4" src="./Elephant.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 5: Goat 1024x576 (16:9) -->
+        <video id="v5" src="./Goat.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 6: Head 1024x1024 -->
+        <video id="v6" src="./Head.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 7: Lama 1024x1024 -->
+        <video id="v7" src="./Lama.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 8: Pipe 1024x1024 -->
+        <video id="v8" src="./Pipe.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 9: Table 956x1138 (portrait) -->
+        <video id="v9" src="./Table.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+        <!-- 10: Wolf 1024x576 (16:9) -->
+        <video id="v10" src="./Wolf.mp4" autoplay loop muted playsinline webkit-playsinline></video>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <!-- 0: Scorpion - square -->
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video src="#v0" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 1: Crab - 16:9 landscape -->
+      <a-entity mindar-image-target="targetIndex: 1">
+        <a-video src="#v1" position="0 0 0" width="1" height="0.5625"></a-video>
+      </a-entity>
+
+      <!-- 2: Dog - square -->
+      <a-entity mindar-image-target="targetIndex: 2">
+        <a-video src="#v2" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 3: Duck - square -->
+      <a-entity mindar-image-target="targetIndex: 3">
+        <a-video src="#v3" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 4: Elephant - near square 1344x1280 -->
+      <a-entity mindar-image-target="targetIndex: 4">
+        <a-video src="#v4" position="0 0 0" width="1" height="0.952"></a-video>
+      </a-entity>
+
+      <!-- 5: Goat - 16:9 landscape -->
+      <a-entity mindar-image-target="targetIndex: 5">
+        <a-video src="#v5" position="0 0 0" width="1" height="0.5625"></a-video>
+      </a-entity>
+
+      <!-- 6: Head - square -->
+      <a-entity mindar-image-target="targetIndex: 6">
+        <a-video src="#v6" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 7: Lama - square -->
+      <a-entity mindar-image-target="targetIndex: 7">
+        <a-video src="#v7" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 8: Pipe - square -->
+      <a-entity mindar-image-target="targetIndex: 8">
+        <a-video src="#v8" position="0 0 0" width="1" height="1"></a-video>
+      </a-entity>
+
+      <!-- 9: Table - portrait 956x1138 -->
+      <a-entity mindar-image-target="targetIndex: 9">
+        <a-video src="#v9" position="0 0 0" width="1" height="1.19"></a-video>
+      </a-entity>
+
+      <!-- 10: Wolf - 16:9 landscape -->
+      <a-entity mindar-image-target="targetIndex: 10">
+        <a-video src="#v10" position="0 0 0" width="1" height="0.5625"></a-video>
+      </a-entity>
+
+    </a-scene>
+
+    <script>
+      const btn = document.getElementById('start-button');
+      const videos = document.querySelectorAll('video');
+      const scene = document.querySelector('a-scene');
+
+      btn.addEventListener('click', () => {
+        btn.style.display = 'none';
+        videos.forEach(v => v.play());
+        scene.systems['mindar-image-system'].start();
+      });
+    </script>
+  </body>
+</html>
